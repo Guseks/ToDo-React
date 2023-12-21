@@ -30,6 +30,31 @@ function createNew(req, res){
 }
 
 function updateTodo(req, res){
+  const updateInfo = req.body;
+  const todoID = parseInt(req.params.id);
+  let updated = false;
+  listOfTodos = listOfTodos.map(todo => {
+    if(todo.id === todoID){
+      updated = true;
+      return {
+        id: todo.id,
+        title: updateInfo.title || todo.title,
+        completed: updateInfo.completed || todo.completed
+      }
+    }
+    else {
+      return todo;
+    }
+    
+  });
+
+  if(updated){
+    res.status(200).json({message: `Todo with ID ${todoID} updated`});
+  }
+  else {
+    res.status(400).json({message: `No Todo with ID ${todoID} found. No Todo updated`});
+  }
+
 
 }
 
@@ -37,4 +62,4 @@ function deleteTodoByID(req, res){
 
 }
 
-module.exports = {getAllTodos, createNew};
+module.exports = {getAllTodos, createNew, updateTodo};
