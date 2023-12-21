@@ -1,19 +1,26 @@
 const express = require("express");
 const router = express.Router();
-const {getAllTodos} = require("./manager");
+const {getAllTodos, createNew} = require("./manager");
 
 router.get("/todos", (req, res) => {
   try {
     res.status(200).json(getAllTodos());
   }
   catch (error){
+    console.error(error);
     res.status(500).json({message: "Internal server error"});
   }
   
 });
 
 router.post("/todos", (req, res) => {
-  //Route for creating new todo
+  try {
+    createNew(req, res);
+  }
+  catch (error){
+    console.error(error);
+    res.status(500).json({message: "Internal server error"});
+  }
 });
 router.put("/todos/:id", (req, res) => {
   //Route for updating existing todo by ID
