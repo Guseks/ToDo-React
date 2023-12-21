@@ -34,7 +34,7 @@ function updateTodo(req, res){
 }
 
 function deleteTodoByID(req, res){
-  
+
 }
 
 module.exports = {getAllTodos, createNew};

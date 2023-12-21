@@ -4,7 +4,14 @@ const {getAllTodos, createNew} = require("./manager");
 
 router.get("/todos", (req, res) => {
   try {
-    res.status(200).json(getAllTodos());
+    const todos = getAllTodos();
+    if(todos.length === 0){
+      res.status(200).json({message: "No todos made yet!"});
+    }
+    else {
+      res.status(200).json(todos);
+    }
+    
   }
   catch (error){
     console.error(error);
