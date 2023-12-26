@@ -2,7 +2,7 @@ const Todo = require("./todo");
 
 let listOfTodos = [];
 
-
+listOfTodos = [...listOfTodos, {id: 1, title: "A", completed: false}, {id: 2, title: "B"}];
 /*
 - Function for getting all todos (DONE)
 - function for adding new todo (DONE)
