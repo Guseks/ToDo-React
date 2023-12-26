@@ -59,7 +59,22 @@ function updateTodo(req, res){
 }
 
 function deleteTodoByID(req, res){
+  const todoID = parseInt(req.params.id);
+  let modified = false;
+  listOfTodos = listOfTodos.filter(todo => {
+    const found = todoID === todo.id;
+    if(found) {
+      modified = true;
+    }
+    return found;
+  });
 
+  if(modified){
+    res.status(200).json({message: `Todo with ID ${todoID} deleted`});
+  }
+  else {
+    res.status(400).json({message: `Todo with ID ${todoID} not found, try again!`});
+  }
 }
 
-module.exports = {getAllTodos, createNew, updateTodo};
+module.exports = {getAllTodos, createNew, updateTodo, deleteTodoByID};

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {getAllTodos, createNew, updateTodo} = require("./manager");
+const {getAllTodos, createNew, updateTodo, deleteTodoByID} = require("./manager");
 
 router.get("/todos", (req, res) => {
   try {
@@ -40,7 +40,13 @@ router.put("/todos/:id", (req, res) => {
 });
 
 router.delete("/todos/:id", (req, res) => {
-  //Route for deleting todo by ID
+  try {
+    deleteTodoByID(req, res);
+  }
+  catch (error){
+    console.error(error);
+    res.status(500).json({message: "Internal server error"});
+  }
 })
 
 
