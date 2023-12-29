@@ -22,10 +22,18 @@ function App() {
 
   }, [])
 
+  const deleteTodo = todo => {
+    console.log(`Deleteting todo with title ${todo.title}`);
+  }
+
+  const todoComplete = todo => {
+    console.log(`Setting todo with title ${todo.title} as completed`);
+  }
+
   return (
     <div className='app'>
       <h2 id = "app-headline">My Todo App</h2>
-      <TodoList todos = {listOfTodos} />
+      <TodoList todos = {listOfTodos} deleteTodo={deleteTodo} todoComplete={todoComplete} />
     </div>
     
   );
