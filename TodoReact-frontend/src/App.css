@@ -1,5 +1,21 @@
 body {
   height: 1000px;
   width: 100%;
-  color: black;
+}
+
+.app {
+  width: 1000px;
+  height: 100%;
+  margin: auto;
+  background-color: #0F1122;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgb(240, 240, 240);
+}
+
+#app-headline {
+  text-align: center;
+  color: white;
 }

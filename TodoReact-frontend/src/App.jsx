@@ -23,10 +23,10 @@ function App() {
   }, [])
 
   return (
-    <>
-      <h2>My Todo App</h2>
+    <div className='app'>
+      <h2 id = "app-headline">My Todo App</h2>
       <TodoList todos = {listOfTodos} />
-    </>
+    </div>
     
   );
   

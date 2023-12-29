@@ -3,7 +3,7 @@ import "./todoList.css";
 
 const TodoList = ({ todos }) => {
   return (
-    <div>
+    <div className='todo-list'>
       <h2>Todo List</h2>
       <ul>
         {todos.map(todo => (
