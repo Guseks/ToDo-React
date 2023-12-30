@@ -1,18 +1,19 @@
 body {
-  height: 1000px;
+  height: 100%;
   width: 100%;
+  background-color: #0F1122;
 }
 
 .app {
   width: 1000px;
   height: 100%;
   margin: auto;
-  background-color: #0F1122;
+  
   padding: 20px 40px;
   display: flex;
   flex-direction: column;
+  row-gap: 10px;
   align-items: center;
-  border: 1px solid rgb(240, 240, 240);
 }
 
 #app-headline {

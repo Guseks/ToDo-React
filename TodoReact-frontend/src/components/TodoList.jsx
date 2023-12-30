@@ -8,7 +8,7 @@ const TodoList = ({ todos, deleteTodo, todoComplete }) => {
   }
   return (
     <div className='todo-list'>
-      <h2>Todo List</h2>
+      <h3>Todo List</h3>
       <ul>
         {todos.map(todo => (
           <li key={todo.id}>

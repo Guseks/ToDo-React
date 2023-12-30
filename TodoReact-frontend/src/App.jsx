@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import './App.css';
 import TodoList from './components/TodoList';
+import TodoForm from './components/TodoForm';
 import axios from "axios";
 
 function App() {
@@ -22,6 +23,16 @@ function App() {
 
   }, [])
 
+  const loadTodos = () => {
+    axios.get("http://localhost:3000/TODO/todos")
+      .then((response)=> {
+        setListOfTodos(response.data);
+      })
+      .catch(error =>{
+        console.log(error);
+      })
+
+  }
   const deleteTodo = todo => {
     console.log(`Deleteting todo with title ${todo.title}`);
   }
@@ -30,9 +41,20 @@ function App() {
     console.log(`Setting todo with title ${todo.title} as completed`);
   }
 
+  const addNewTodo = async (newTitle) => {
+    try {
+      await axios.post("http://localhost:3000/TODO/todos", {title: newTitle})
+      await loadTodos();
+    }
+    catch (error){
+        console.error("Failed to add new Todo", error);
+    }
+  }
+
   return (
     <div className='app'>
       <h2 id = "app-headline">My Todo App</h2>
+      <TodoForm setListOfTodos = {setListOfTodos} addNewTodo={addNewTodo}/>
       <TodoList todos = {listOfTodos} deleteTodo={deleteTodo} todoComplete={todoComplete} />
     </div>
     
