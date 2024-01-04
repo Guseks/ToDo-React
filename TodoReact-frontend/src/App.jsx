@@ -8,33 +8,32 @@ function App() {
   const [listOfTodos, setListOfTodos] = useState([]);
 
   useEffect(() => {
-
-    //Use axios to get list of Todos from backend on mount
-    // Everytime we update the todos we will set the variable or update it, causing a repaint.
-    axios.get("http://localhost:3000/TODO/todos")
-      .then((response)=> {
-        //console.log(response.data);
+  //Use axios to get list of Todos from backend
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/TODO/todos");
         setListOfTodos(response.data);
-      })
-      .catch(error =>{
+      } catch (error) {
         console.log(error);
-      })
+      }
+    };
 
+    fetchData();
+    
+  }, []);
 
-  }, [])
-
-  const loadTodos = () => {
-    axios.get("http://localhost:3000/TODO/todos")
-      .then((response)=> {
-        setListOfTodos(response.data);
-      })
-      .catch(error =>{
-        console.log(error);
-      })
-
-  }
-  const deleteTodo = todo => {
-    console.log(`Deleteting todo with title ${todo.title}`);
+  
+  const deleteTodo = async (todo) => {
+    const todoID = todo.id;
+    try {
+      await axios.delete(`http://localhost:3000/TODO/todos/${todoID}`);
+      let newList = listOfTodos.filter(todo => todo.id !== todoID);
+      setListOfTodos(newList);
+            
+    }
+    catch (error) {
+      console.error("Failed to delete todo", error);
+    }
   }
 
   const todoComplete = todo => {
@@ -43,8 +42,10 @@ function App() {
 
   const addNewTodo = async (newTitle) => {
     try {
+
       await axios.post("http://localhost:3000/TODO/todos", {title: newTitle})
-      await loadTodos();
+      const response = await axios.get("http://localhost:3000/TODO/todos");
+      setListOfTodos(response.data);
     }
     catch (error){
         console.error("Failed to add new Todo", error);

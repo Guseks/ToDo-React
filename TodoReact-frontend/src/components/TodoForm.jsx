@@ -8,7 +8,6 @@ const TodoForm = ({setListOfTodos, addNewTodo}) => {
     
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(newTitle);
         await addNewTodo(newTitle);
         setNewTitle("");
         

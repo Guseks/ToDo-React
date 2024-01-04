@@ -60,20 +60,14 @@ function updateTodo(req, res){
 
 function deleteTodoByID(req, res){
   const todoID = parseInt(req.params.id);
-  let modified = false;
-  listOfTodos = listOfTodos.filter(todo => {
-    const found = todoID === todo.id;
-    if(found) {
-      modified = true;
-    }
-    return found;
-  });
+  const initialLength = listOfTodos.length;
 
-  if(modified){
-    res.status(200).json({message: `Todo with ID ${todoID} deleted`});
-  }
-  else {
-    res.status(400).json({message: `Todo with ID ${todoID} not found, try again!`});
+  listOfTodos = listOfTodos.filter((todo) => todo.id !== todoID);
+
+  if (listOfTodos.length < initialLength) {
+    res.status(200).json({ message: `Todo with ID ${todoID} deleted` });
+  } else {
+    res.status(400).json({ message: `Todo with ID ${todoID} not found` });
   }
 }
 
