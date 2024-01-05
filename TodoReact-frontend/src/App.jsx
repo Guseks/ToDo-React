@@ -6,6 +6,7 @@ import axios from "axios";
 
 function App() {
   const [listOfTodos, setListOfTodos] = useState([]);
+  const [addTodoError, setAddTodoError] = useState("");
 
   useEffect(() => {
   //Use axios to get list of Todos from backend
@@ -61,10 +62,17 @@ function App() {
 
   const addNewTodo = async (newTitle) => {
     try {
-
-      await axios.post("http://localhost:3000/TODO/todos", {title: newTitle})
-      const response = await axios.get("http://localhost:3000/TODO/todos");
-      setListOfTodos(response.data);
+      const titleExists = listOfTodos.some(todo => todo.title === newTitle);
+      if(titleExists){
+        setAddTodoError("A todo with this title already exists.");
+        setTimeout(()=> setAddTodoError(""), 2000);
+      }
+      else {
+        await axios.post("http://localhost:3000/TODO/todos", {title: newTitle})
+        const response = await axios.get("http://localhost:3000/TODO/todos");
+        setListOfTodos(response.data);
+      }
+      
     }
     catch (error){
         console.error("Failed to add new Todo", error);
@@ -73,6 +81,7 @@ function App() {
 
   return (
     <div className='app'>
+      {addTodoError && <span className='addTodoError'>{addTodoError}</span>}
       <h2 id = "app-headline">My Todo App</h2>
       <TodoForm setListOfTodos = {setListOfTodos} addNewTodo={addNewTodo}/>
       <TodoList 

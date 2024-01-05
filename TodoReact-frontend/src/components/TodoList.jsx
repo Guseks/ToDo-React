@@ -8,7 +8,7 @@ const TodoList = ({ todos, deleteTodo, todoComplete, todoUnlock }) => {
       <h3>Todo List</h3>
       <ul>
         {todos.map(todo => (
-          <li  id = {todo.id} key={todo.id}>
+          <li  id = {todo.id} key={todo.title}>
             {todo.title}
             <div className='buttons'>
               <button onClick={()=> {
