@@ -4,13 +4,14 @@ ul {
     margin-top: -20px;
 }
 li {
-    padding: 7px 15px;
+    padding: 5px 15px;
     margin-bottom: 8px;
-    border: 1px solid rgb(220, 220, 220);
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
 
 }
@@ -21,9 +22,10 @@ li {
 }
 
 .buttons button {
-    padding:  2px 5px;
+    padding:  4px 6px;
     font-size: 12px;
 }
+
 
 .todo-list {
     padding: 20px;
@@ -34,4 +36,8 @@ li {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+}
+
+.complete {
+    background-color: lightgreen;
 }

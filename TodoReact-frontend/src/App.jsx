@@ -36,8 +36,27 @@ function App() {
     }
   }
 
-  const todoComplete = todo => {
+  const todoComplete = async (todo) => {
     console.log(`Setting todo with title ${todo.title} as completed`);
+    const todoID = todo.id;
+    try {
+      await axios.put(`http://localhost:3000/TODO/todos/${todoID}`, {completed: true});
+    }
+    catch (error){
+      console.error("failed to update todo to completed", error);
+    }
+    
+  }
+
+  const todoUnlock = async (todo) => {
+    console.log(`Setting todo with title ${todo.title} as uncompleted`);
+    const todoID = todo.id;
+    try {
+    await axios.put(`http://localhost:3000/TODO/todos/${todoID}`, {completed: false});
+    }
+    catch (error){
+      console.error("failed to update todo to uncompleted", error);
+    }
   }
 
   const addNewTodo = async (newTitle) => {
@@ -56,7 +75,11 @@ function App() {
     <div className='app'>
       <h2 id = "app-headline">My Todo App</h2>
       <TodoForm setListOfTodos = {setListOfTodos} addNewTodo={addNewTodo}/>
-      <TodoList todos = {listOfTodos} deleteTodo={deleteTodo} todoComplete={todoComplete} />
+      <TodoList 
+        todos = {listOfTodos} 
+        deleteTodo={deleteTodo} 
+        todoComplete={todoComplete} 
+        todoUnlock={todoUnlock} />
     </div>
     
   );
