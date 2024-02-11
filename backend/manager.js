@@ -1,74 +1,39 @@
-const Todo = require("./todo");
 
-let listOfTodos = [];
+const db = require("./database")
 
-listOfTodos = [...listOfTodos, {id: 1, title: "A", completed: false}, {id: 2, title: "B", completed: false}];
-/*
-- Function for getting all todos (DONE)
-- function for adding new todo (DONE)
-- function for updating todo, with optional properties. Either just completion status or changing content
-- function for deleting todo from list of todos
-
-*/
-
-function getAllTodos(){
-  return listOfTodos;
-}
-
-function createNew(req, res){
-  const todoTitle = req.body.title;
-  const todoExist = ((listOfTodos.findIndex(todo => todo.title === todoTitle)) !== -1);
-  if(todoExist){
-    res.status(400).json({message: `Todo with title ${todoTitle} already exists`});
-  }
-  else {
-    const newTodo = new Todo(listOfTodos.length+1, todoTitle);
-    listOfTodos = [...listOfTodos, newTodo];
-    res.status(200).json({message: `New Todo with title ${todoTitle} created`});
-  }
+async function getAllTodos(){
   
+  const todos = await db.getTodosFromDatabase();
+  return todos;
 }
 
-function updateTodo(req, res){
+async function createNew(req, res){
+  const todoTitle = req.body.title;
+
+  await db.addNewTodo(todoTitle);
+  res.status(200).json({message: `New todo with title ${todoTitle} added successfully`});
+
+}
+
+async function updateTodo(req, res){
   const updateInfo = req.body;
   const todoID = parseInt(req.params.id);
-  let updated = false;
-  listOfTodos = listOfTodos.map(todo => {
-    if(todo.id === todoID){
-      updated = true;
-      return {
-        id: todo.id,
-        title: updateInfo.title || todo.title,
-        completed: updateInfo.completed || todo.completed
-      }
-    }
-    else {
-      return todo;
-    }
-    
-  });
 
-  if(updated){
-    res.status(200).json({message: `Todo with ID ${todoID} updated`});
-  }
-  else {
-    res.status(400).json({message: `No Todo with ID ${todoID} found. No Todo updated`});
-  }
-
+  
+  
+  await db.updateTodoInDatabase(todoID, updateInfo);
+  res.status(200).json({message: `todo with id ${todoID} updated`});
+ 
+ 
 
 }
 
-function deleteTodoByID(req, res){
+async function deleteTodoByID(req, res){
   const todoID = parseInt(req.params.id);
-  const initialLength = listOfTodos.length;
+  await db.deleteTodoInDatabase(todoID);
+  res.status(200).json({messasge: `Todo with id ${todoID} successfully deleted`});
 
-  listOfTodos = listOfTodos.filter((todo) => todo.id !== todoID);
-
-  if (listOfTodos.length < initialLength) {
-    res.status(200).json({ message: `Todo with ID ${todoID} deleted` });
-  } else {
-    res.status(400).json({ message: `Todo with ID ${todoID} not found` });
-  }
+  
 }
 
 module.exports = {getAllTodos, createNew, updateTodo, deleteTodoByID};

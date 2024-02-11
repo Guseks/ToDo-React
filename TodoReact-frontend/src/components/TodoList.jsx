@@ -3,9 +3,11 @@ import "./todoList.css";
 
 const TodoList = ({ todos, deleteTodo, todoComplete, todoUnlock }) => {
 
+
   return (
     <div className='todo-list'>
       <h3>Todo List</h3>
+      {todos.length !== 0 ? (
       <ul>
         {todos.map(todo => (
           <li  id = {todo.id} key={todo.title}>
@@ -29,6 +31,10 @@ const TodoList = ({ todos, deleteTodo, todoComplete, todoUnlock }) => {
           </li>
         ))}
       </ul>
+      ) : (
+        <p>No todos yet!</p>
+      )}
+
     </div>
   );
 };

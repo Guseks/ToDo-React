@@ -13,7 +13,8 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:3000/TODO/todos");
-        setListOfTodos(response.data);
+        setListOfTodos(response.data);  
+        
       } catch (error) {
         console.log(error);
       }

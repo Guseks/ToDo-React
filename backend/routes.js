@@ -2,15 +2,10 @@ const express = require("express");
 const router = express.Router();
 const {getAllTodos, createNew, updateTodo, deleteTodoByID} = require("./manager");
 
-router.get("/todos", (req, res) => {
+router.get("/todos", async (req, res) => {
   try {
-    const todos = getAllTodos();
-    if(todos.length === 0){
-      res.status(200).json({message: "No todos made yet!"});
-    }
-    else {
-      res.status(200).json(todos);
-    }
+    const todos = await getAllTodos();
+    res.status(200).json(todos);
     
   }
   catch (error){
@@ -20,9 +15,9 @@ router.get("/todos", (req, res) => {
   
 });
 
-router.post("/todos", (req, res) => {
+router.post("/todos", async (req, res) => {
   try {
-    createNew(req, res);
+    await createNew(req, res);
   }
   catch (error){
     console.error(error);
