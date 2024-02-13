@@ -29,8 +29,8 @@ function App() {
     const todoID = todo.id;
     try {
       await axios.delete(`http://localhost:3000/TODO/todos/${todoID}`);
-      let newList = listOfTodos.filter(todo => todo.id !== todoID);
-      setListOfTodos(newList);
+      const response = await axios.get(`http://localhost:3000/TODO/todos`)
+      setListOfTodos(response.data);
             
     }
     catch (error) {
@@ -43,6 +43,8 @@ function App() {
     const todoID = todo.id;
     try {
       await axios.put(`http://localhost:3000/TODO/todos/${todoID}`, {completed: true});
+      const response = await axios.get(`http://localhost:3000/TODO/todos`)
+      setListOfTodos(response.data);
     }
     catch (error){
       console.error("failed to update todo to completed", error);
@@ -54,7 +56,9 @@ function App() {
     console.log(`Setting todo with title ${todo.title} as uncompleted`);
     const todoID = todo.id;
     try {
-    await axios.put(`http://localhost:3000/TODO/todos/${todoID}`, {completed: false});
+      await axios.put(`http://localhost:3000/TODO/todos/${todoID}`, {completed: false});
+      const response = await axios.get(`http://localhost:3000/TODO/todos`)
+      setListOfTodos(response.data);
     }
     catch (error){
       console.error("failed to update todo to uncompleted", error);
